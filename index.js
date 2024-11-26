@@ -18,28 +18,38 @@ app.post("/", express.json(), async (req, res) => {
   console.log('query:', query)
   // Use Copilot's LLM to generate a response to the user's messages, with
   // our extra system messages attached.
-  const aionuLLMResponse = await fetch(
-    "https://api.aionu.edu-tech.io/v1/chat-messages",
-    {
-      method: "POST",
-      headers: {
-        authorization: `Bearer app-6Ng3P3RlOfjClWjjnMmbNv61`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        "inputs": {},
-        "query": `${query}`,  
-        "response_mode": "blocking",  
-        "conversation_id": "",  
-        "user": "copilot"
-    }),
-    }
-  );
+  try {
+    const aionuLLMResponse = await fetch(
+      "https://api.aionu.edu-tech.io/v1/chat-messages",
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer app-6Ng3P3RlOfjClWjjnMmbNv61`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          "inputs": {},
+          "query": `${query}`,  
+          "response_mode": "blocking",  
+          "conversation_id": "",  
+          "user": "copilot"
+      }),
+      }
+    );
 
-  console.log('aionuLLMResponse:', aionuLLMResponse)
+    console.log('aionuLLMResponse:', aionuLLMResponse)
+    const responseData = await aionuLLMResponse.json();
+    //console.log('Response Data:', responseData);
+    console.log('answer:', responseData.answer);
 
-  // Stream the response straight back to the user.
-  Readable.from(aionuLLMResponse.body).pipe(res);
+
+    // Stream the response straight back to the user.
+    //res.json(responseData.answer);
+    Readable.from(responseData.answer).pipe(res);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 })
 
 const port = Number(process.env.PORT || '3000')
