@@ -1,0 +1,20 @@
+{
+    "name": "aionu-copilot-extension",
+    "private": "true",
+    "description": "A Copilot Extension for AI:ON-U",
+    "scripts": {
+      "start": "node index.js",
+      "dev": "node --watch index.js"
+    },
+    "type": "module",
+    "dependencies": {
+      "express": "^4.19.2"
+    },
+    "keywords": [
+    "copilot",
+    "extension",
+    "AI",
+    "AI:ON-U",
+    "aionu"
+  ]
+  }
