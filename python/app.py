@@ -52,7 +52,7 @@ def handle_request():
                                 'id': f'chatcmpl-{os.urandom(5).hex()}',
                                 'object': 'chat.completion.chunk',
                                 'created': int(time.time()),
-                                'model': 'gpt-4o',
+                                'model': '',
                                 'choices': [{
                                     'index': 0,
                                     'delta': {
@@ -74,7 +74,7 @@ def handle_request():
                 'id': f'chatcmpl-{os.urandom(5).hex()}',
                 'object': 'chat.completion.chunk',
                 'created': int(time.time()),
-                'model': 'gpt-3.5-turbo',
+                'model': '',
                 'choices': [{
                     'index': 0,
                     'delta': {
